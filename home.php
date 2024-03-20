@@ -12,15 +12,20 @@
     <?php
     session_start();
 
-    if (isset ($_SESSION['companyName']) && isset ($_SESSION['fullName']) && isset ($_SESSION['email']) && isset ($_SESSION['phone']) && isset ($_SESSION['service']) && isset ($_SESSION['isLogged'])) {
-        echo "Company Name: " . $_SESSION['companyName'] . "<br>";
-        echo "Full Name: " . $_SESSION['fullName'] . "<br>";
-    }
 
 
     ?>
-    <h1>Welcome to the home page</h1>
+    <h1>Welcome to the home page <?php echo $_SESSION['fullName']?></h1>
 
+    <div> 
+
+    <?php echo $_SESSION['companyName']?></br>
+    <?php echo $_SESSION['email']?></br>
+    <?php echo $_SESSION['phone']?></br>
+    <?php echo $_SESSION['service']?></br>
+
+    </div>
+<hr/>
     <button id="logoutButton">Logout</button>
 
 
