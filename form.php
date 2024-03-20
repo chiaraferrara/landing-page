@@ -11,30 +11,35 @@
 <body>
     <?php
 
-    
+    if (session_status() === PHP_SESSION_NONE) {
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset ($_POST['companyName']) && isset ($_POST['fullName']) && isset ($_POST['email']) && isset ($_POST['phone']) && isset ($_POST['service']) && isset ($_POST['isLogged'])) {
-        // require ('User.php');
-        // session_start();
-        // $user = new User();
+        session_start();
+    }
 
-        $_SESSION['companyName'] = $_POST['companyName'];
-        $_SESSION['fullName'] = $_POST['fullName'];
-        $_SESSION['email'] = $_POST['email'];
-        $_SESSION['phone'] = $_POST['phone'];
-        $_SESSION['service'] = $_POST['service'];
-        $_SESSION['isLogged'] = $_POST['isLogged'];
-
-
-        $user->login($companyName, $fullName, $email, $phone, $service);
-        header("Location: " . $_SERVER['PHP_SELF']);
+    if (isset($_SESSION['isLogged']) && $_SESSION['isLogged'] === true) {
+        header("Location: home.php");
         exit;
-
     }
 
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+        if (isset ($_POST['companyName']) && isset ($_POST['fullName']) && isset ($_POST['email']) && isset ($_POST['phone']) && isset ($_POST['service'])) {
+
+            $_SESSION['companyName'] = $_POST['companyName'];
+            $_SESSION['fullName'] = $_POST['fullName'];
+            $_SESSION['email'] = $_POST['email'];
+            $_SESSION['phone'] = $_POST['phone'];
+            $_SESSION['service'] = $_POST['service'];
+            $_SESSION['isLogged'] = true;
+            header("Location: home.php");
+            exit;
+        }
+    }
     ?>
+
+
+
 
 
     <div class="row">
@@ -52,10 +57,10 @@
                     <input type="tel" name="phone" id="phone" placeholder="Phone" value='<?php $phone ?>' ; required>
                     <select name="service" id="service" value='<?php $service ?>'>
                         <option value="" disabled selected>Choose service...</option>
-                        <option value="service1">Service1</option>
-                        <option value="service2">Service2</option>
+                        <option value="Phone Repair">Phone Repair</option>
+                        <option value="Return Phone">Return Phone</option>
                     </select>
-                    <input type="hidden" name="isLogged" value='<?php $isLogged ?>'>
+                    <input type="hidden" name="isLogged" value='<?php $isLogged = true ?>'>
                     <button type="submit" id="submitButton" name="submit" disabled>Send request</button>
                 </div>
 
@@ -118,7 +123,7 @@
                     "&email=" + encodeURIComponent(email) +
                     "&phone=" + encodeURIComponent(phone) +
                     "&service=" + encodeURIComponent(service) +
-                    "&isLogged=" + encodeURIComponent(isLoggedInput.value)
+                    "&isLogged=true"
                 );
             });
         });

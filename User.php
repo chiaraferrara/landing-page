@@ -1,6 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
 
-session_start();
+    session_start();
+}
+
+// session_start();
 
 // if (!isset ($_SESSION['companyName'])) {
 //     $_SESSION['companyName'] = '';
@@ -31,10 +35,12 @@ class User
 {
     public function __construct()
     {
-        $this->user = $_SESSION['user'];
+        if (isset ($_SESSION['user'])) {
+            $this->user = $_SESSION['user'];
+        }
     }
 
-    public function login($companyName, $fullName, $email, $phone, $service)
+    public function login($companyName, $fullName, $email, $phone, $service, $isLogged = true)
     {
 
         $_SESSION['companyName'] = $companyName;
@@ -42,6 +48,7 @@ class User
         $_SESSION['email'] = $email;
         $_SESSION['phone'] = $phone;
         $_SESSION['service'] = $service;
+        $_SESSION['isLogged'] = $isLogged;
         $this->setUserLogged(true);
     }
 

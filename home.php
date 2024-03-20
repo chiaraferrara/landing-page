@@ -4,38 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 
 <body>
 
     <?php
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
 
-
+        session_start();
+    }
 
     ?>
-    <h1>Welcome to the home page <?php echo $_SESSION['fullName']?></h1>
+    <div class="dashboard">
+        <h1>Welcome to the home page</h1>
+        
 
-    <div> 
 
-    <?php echo $_SESSION['companyName']?></br>
-    <?php echo $_SESSION['email']?></br>
-    <?php echo $_SESSION['phone']?></br>
-    <?php echo $_SESSION['service']?></br>
+        <?php
+        if (isset($_SESSION['companyName']) && isset($_SESSION['email']) && isset($_SESSION['phone']) && isset($_SESSION['service'])){
+            echo $_SESSION['companyName'] . "<br>";
+            echo $_SESSION['email'] . "<br>";
+            echo $_SESSION['phone'] . "<br>";
+            echo $_SESSION['service'] . "<br>";
+        }
+        ?>
+
+
+        <button id="logoutButton">Logout</button>
+
 
     </div>
-<hr/>
-    <button id="logoutButton">Logout</button>
-
-
-
 
 </body>
 
 <script>
     document.getElementById('logoutButton').addEventListener('click', function () {
-        window.location.href = "index.php";
+        <?php $_SESSION['isLogged'] = false;
+        
+        ?>
+        
+        
     });
 
 </script>
