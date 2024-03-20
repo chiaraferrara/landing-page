@@ -4,31 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// session_start();
-
-// if (!isset ($_SESSION['companyName'])) {
-//     $_SESSION['companyName'] = '';
-// }
-
-// if (!isset ($_SESSION['fullName'])) {
-//     $_SESSION['fullName'] = '';
-// }
-
-// if (!isset ($_SESSION['email'])) {
-//     $_SESSION['email'] = '';
-// }
-
-// if (!isset ($_SESSION['phone'])) {
-//     $_SESSION['phone'] = '';
-// }
-
-// if (!isset ($_SESSION['service'])) {
-//     $_SESSION['service'] = '';
-// }
-
-// if (!isset ($_SESSION['isLogged'])) {
-//     $_SESSION['isLogged'] = false;
-// }
 
 
 class User

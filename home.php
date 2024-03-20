@@ -42,9 +42,8 @@
 <script>
     document.getElementById('logoutButton').addEventListener('click', function () {
         <?php $_SESSION['isLogged'] = false;
-        
         ?>
-        
+        window.location.href = "index.php";
         
     });
 
