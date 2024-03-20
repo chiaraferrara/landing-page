@@ -10,13 +10,31 @@
 
 <body>
     <?php
-    require ('User.php');
 
-    $user = new User();
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset ($_POST['companyName']) && isset ($_POST['fullName']) && isset ($_POST['email']) && isset ($_POST['phone']) && isset ($_POST['service'])) {
+        require ('User.php');
+
+        $user = new User();
+
+        $companyName = $_POST['companyName'];
+        $fullName = $_POST['fullName'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $service = $_POST['service'];
+
+        $user->login($companyName, $fullName, $email, $phone, $service);
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
 
 
-    
-        ?>
+        if ($user->isLoggedIn()) {
+            echo "Logged in";
+        }
+    }
+
+
+
+    ?>
 
 
     <div class="row">
@@ -52,9 +70,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-
             var inputs = document.querySelectorAll('input, select');
             var submitButton = document.getElementById('submitButton');
+
             inputs.forEach(function (input) {
                 input.addEventListener('input', function () {
                     var allFilled = true;
@@ -66,26 +84,37 @@
                     submitButton.disabled = !allFilled;
                 });
             });
-        });
 
+            submitButton.addEventListener("click", function () {
+                var companyNameInput = document.querySelector("input[name='companyName']");
+                var companyName = companyNameInput.value;
+                var fullNameInput = document.querySelector("input[name='fullName']");
+                var fullName = fullNameInput.value;
+                var emailInput = document.querySelector("input[name='email']");
+                var email = emailInput.value;
+                var phoneInput = document.querySelector("input[name='phone']");
+                var phone = phoneInput.value;
+                var serviceInput = document.querySelector("select[name='service']");
+                var service = serviceInput.value;
 
-        document.addEventListener("DOMContentLoaded", function () {
-            var submitButton = document.querySelector("#submitButton");
-
-            submitButton.addEventListener("click", function (event) {
-                event.preventDefault();
-
-                var form = document.querySelector("form");
-                var formData = new FormData(form);
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "<?php echo $_SERVER['PHP_SELF']; ?>", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                        alert(formData, "Dati inviati con successo!");
+                        alert(
+                            fullName + " " + companyName + " " + email + " " + phone + " " + service + " " +
 
+                            "registrato");
                     }
                 };
-                xhr.send(formData);
+                xhr.send(
+                    "companyName=" + encodeURIComponent(companyName) +
+                    "&fullName=" + encodeURIComponent(fullName) +
+                    "&email=" + encodeURIComponent(email) +
+                    "&phone=" + encodeURIComponent(phone) +
+                    "&service=" + encodeURIComponent(service)
+                );
             });
         });
     </script>
