@@ -11,8 +11,8 @@
 
     <?php
     session_start();
-    
-    if (isset($_SESSION['companyName']) && isset($_SESSION['fullName']) && isset($_SESSION['email']) && isset($_SESSION['phone']) && isset($_SESSION['service']) && isset($_SESSION['isLogged'])) {
+
+    if (isset ($_SESSION['companyName']) && isset ($_SESSION['fullName']) && isset ($_SESSION['email']) && isset ($_SESSION['phone']) && isset ($_SESSION['service']) && isset ($_SESSION['isLogged'])) {
         echo "Company Name: " . $_SESSION['companyName'] . "<br>";
         echo "Full Name: " . $_SESSION['fullName'] . "<br>";
     }
@@ -32,5 +32,7 @@
     document.getElementById('logoutButton').addEventListener('click', function () {
         window.location.href = "index.php";
     });
+
+</script>
 
 </html>
